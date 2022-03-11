@@ -1,4 +1,4 @@
-# You need to write a programm which will copy photos from vk.com to cloud storage on Yandex.disc
+# You need to write a program which will copy photos from vk.com to cloud storage on Yandex.disc
 
 ## Requirements:
 1. Get photos using REST API [photos.get](https://vk.com/dev/photos.get).
