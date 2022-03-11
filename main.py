@@ -27,7 +27,6 @@ class VkUser:
         self.base_params = {'access_token': self.token,
                             'v': self.version}
         self.json, self.export_dict = self.get_output()
-        # pprint(self.export_dict)
 
     def get_photo(self):
         url = 'https://api.vk.com/method/photos.get'
@@ -35,17 +34,10 @@ class VkUser:
                   'album_id': 'profile',
                   'photo_sizes': 1,
                   'extended': 1,
-                  'count': photo_qty}
+                  'count': photo_qty,
+                  'fields': 'screen_name'}
         response = requests.get(url, params={**self.base_params, **params}).json()['response']
         return response['count'], response['items']
-
-    # def get_user(self):
-    #     url = 'https://api.vk.com/method/users.get'
-    #     params = {'user_ids': self.id,
-    #               'fields': 'screen_name'}
-    #     response = requests.get(url, params={**self.base_params, **params}).json()['response']
-    #     # pprint(response)
-    #     # return response
 
     def get_largest_photo(self, dict_response):
         largest_photo = 0
@@ -80,7 +72,6 @@ class VkUser:
                                    'url_picture': url_download,
                                    'size': picture_size})
                 result[likes_count] = photo_dict
-            # pprint(result)
         return result
 
     def get_output(self):
@@ -122,16 +113,13 @@ class YaDisc:
         url = "https://cloud-api.yandex.net/v1/disk/resources"
         params = {'path': folder_name}
         response = requests.get(url, headers=self.headers, params=params).json()['_embedded']['items']
-        # pprint(response)
         photo_list = []
         for name in response:
             photo_list.append(name['name'])
         return photo_list
-        # pprint(photo_list)
 
     def upload_photo_to_disc(self, name_url_dict):
         photo_list = self.get_photo_names(self.folder)
-        # pprint(photo_list)
         total_files_added = 0
         for key in name_url_dict.keys():
             if key not in photo_list:
